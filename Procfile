@@ -1,0 +1,1 @@
+web: python manage.py migrate && gunicorn sma_app.wsgi

@@ -38,6 +38,34 @@ def get_product(request):
 
     return HttpResponseNotAllowed(permitted_methods=['GET'])
 
+@csrf_exempt
+def update_product(request):
+    if(request.method == 'POST'):
+        request_body = json.loads(request.body)
+        name = request_body.get("name")
+        description = request_body.get("description")
+        quantity = request_body.get("quantity")
+        barcode_id = request_body.get("barcode_id")
+
+        if barcode_id == None:
+            return HttpResponseBadRequest("Barcode id can't be null")
+
+        update_product_query = "UPDATE product "
+        if name != None:
+            update_product_query += f"SET name = '{name}', "
+        if description != None:
+            update_product_query += f"SET description = '{description}', "
+        if quantity != None:
+            update_product_query += f"SET quantity = {quantity}, "
+
+        update_product_query = update_product_query[:-2]
+        update_product_query += f" WHERE barcode_id = '{barcode_id}';"
+        execute_query(update_product_query)
+
+        return HttpResponse(status=200)
+
+    return HttpResponseNotAllowed(permitted_methods=['POST'])
+
 
 def execute_query(query):
     with connection.cursor() as cursor:

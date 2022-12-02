@@ -5,6 +5,7 @@ from productCRUD import views
 app_name = 'ProductCRUD'
 
 urlpatterns = [
-    path('create/', views.create_product, name='Create Product'),
     path('', views.get_product, name='Get Product'),
+    path('create/', views.create_product, name='Create Product'),
+    path('update/', views.update_product, name='Update Product'),
 ]

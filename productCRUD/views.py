@@ -66,6 +66,22 @@ def update_product(request):
 
     return HttpResponseNotAllowed(permitted_methods=['POST'])
 
+@csrf_exempt
+def delete_product(request):
+    if(request.method == 'POST'):
+        request_body = json.loads(request.body)
+        barcode_id = request_body.get("barcode_id")
+
+        if barcode_id == None:
+            return HttpResponseBadRequest("Barcode id can't be null")
+
+        delete_product_query = f"DELETE FROM product WHERE barcode_id = '{barcode_id}';"
+        execute_query(delete_product_query)
+
+        return HttpResponse(status=200)
+
+    return HttpResponseNotAllowed(permitted_methods=['POST'])
+
 
 def execute_query(query):
     with connection.cursor() as cursor:

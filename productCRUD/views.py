@@ -17,14 +17,6 @@ def create_product(request):
         if barcode_id == None  or  name == None:
             return HttpResponseBadRequest("Barcode id and name can't be null")
 
-        create_table_query = "CREATE TABLE IF NOT EXISTS product (\
-            name VARCHAR(63) not null, \
-            description VARCHAR(127), \
-            quantity INT default 0, \
-            barcode_id VARCHAR(127) primary key \
-        );"
-        execute_query(create_table_query)
-
         create_product_query = f"INSERT INTO product(name, description, quantity, barcode_id) \
             VALUES('{name}', '{description}', {quantity}, '{barcode_id}');"
         execute_query(create_product_query)

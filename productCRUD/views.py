@@ -33,6 +33,35 @@ def create_product(request):
 
     return HttpResponseNotAllowed(permitted_methods=['POST'])
 
+@csrf_exempt
+def get_product(request):
+    if(request.method == 'GET'):
+        name = request.GET.get('name', '')
+
+        get_product_query = f"SELECT * FROM product WHERE name LIKE '%{name}%';"
+        products = execute_and_fetchall_query(get_product_query)
+        products = json.dumps(products)
+
+        return HttpResponse(products)
+
+    return HttpResponseNotAllowed(permitted_methods=['GET'])
+
+
 def execute_query(query):
     with connection.cursor() as cursor:
         cursor.execute(query)
+
+def execute_and_fetchall_query(query):
+    result = None
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        result = dictfetchall(cursor)
+    return result
+
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]

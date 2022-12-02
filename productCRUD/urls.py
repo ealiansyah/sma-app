@@ -5,5 +5,5 @@ from productCRUD import views
 app_name = 'ProductCRUD'
 
 urlpatterns = [
-    
+    path('create/', views.create_product, name='create'),
 ]

@@ -86,12 +86,19 @@ WSGI_APPLICATION = 'sma_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+PGUSER = 'postgres'	
+PGPASSWORD = '2tjMFFQgn34afaujXLUF'	
+PGHOST = 'containers-us-west-137.railway.app'	
+PGPORT = '7719'	
+PGDATABASE = 'railway'	
+DATABASE_URL = f'postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}'	
+# postgresql://${{ PGUSER }}:${{ PGPASSWORD }}@${{ PGHOST }}:${{ PGPORT }}/${{ PGDATABASE }}
+
+DATABASES = {	
+    'default': dj_database_url.config(),	
+}	
+DATABASES['default'] = dj_database_url.config()	
+DATABASES['default'] = dj_database_url.config(default=DATABASE_URL)
 
 # Set database settings automatically using DATABASE_URL.
 if PRODUCTION:

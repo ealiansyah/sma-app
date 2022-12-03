@@ -13,12 +13,13 @@ def create_product(request):
     description = request_body.get("description", "")
     quantity = request_body.get("quantity", 0)
     barcode_id = request_body.get("barcode_id")
+    price = request_body.get("price", 0)
 
     if barcode_id == None  or  name == None:
         return HttpResponseBadRequest("Barcode id and name can't be null")
 
-    create_product_query = f"INSERT INTO product(name, description, quantity, barcode_id) \
-        VALUES('{name}', '{description}', {quantity}, '{barcode_id}');"
+    create_product_query = f"INSERT INTO product(name, description, quantity, barcode_id, price) \
+        VALUES('{name}', '{description}', {quantity}, '{barcode_id}', {price});"
     execute_query(create_product_query)
 
     return HttpResponse(status=201)
@@ -42,6 +43,7 @@ def update_product(request):
     description = request_body.get("description")
     quantity = request_body.get("quantity")
     barcode_id = request_body.get("barcode_id")
+    price = request_body.get("price")
 
     if barcode_id == None:
         return HttpResponseBadRequest("Barcode id can't be null")
@@ -53,6 +55,8 @@ def update_product(request):
         update_product_query += f"SET description = '{description}', "
     if quantity != None:
         update_product_query += f"SET quantity = {quantity}, "
+    if price != None:
+        update_product_query += f"SET price = {price}, "
 
     update_product_query = update_product_query[:-2]
     update_product_query += f" WHERE barcode_id = '{barcode_id}';"

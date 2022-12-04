@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('api/ask_help',include('create_help.urls')),
+    path('api/provide_help',include('provide_help.urls')),
 ]

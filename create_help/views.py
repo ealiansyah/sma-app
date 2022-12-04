@@ -1,5 +1,4 @@
 import json
-from django.shortcuts import render
 from django.http import HttpResponseBadRequest, HttpResponseNotAllowed, HttpResponse
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
@@ -18,7 +17,10 @@ def create_help(request):
 
     create_help_query = f"INSERT INTO help_ticket(id, title, description) \
         VALUES('{id}', '{title}', {description});"
-    with connection.cursor as cursor:
-        cursor.execute(create_help_query)
+    execute_query(create_help_query)
 
     return HttpResponse(status=201)
+
+def execute_query(query):
+    with connection.cursor() as cursor:
+        cursor.execute(query)

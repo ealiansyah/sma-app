@@ -51,7 +51,5 @@ def post_checkout(request, data):
   status, message, checkout = utils.create_and_apply_checkout(data, productModels)
 
   jsonData = CheckoutSerializer(checkout).data
-  # print(jsonData)
-  print(ProductQuantitySerializer(ProductQuantity.objects.get(id=1)).data)
 
   return JsonResponse(status=status, data={ 'message': message, 'data': jsonData })

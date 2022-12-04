@@ -6,7 +6,7 @@ class ProductQuantitySerializer(serializers.ModelSerializer):
 
   class Meta:
     model = ProductQuantity
-    fields = ('product_barcode', 'quantity')
+    fields = ('product_barcode', 'quantity', 'price')
 
 class CheckoutSerializer(serializers.ModelSerializer):
   products_quantity = ProductQuantitySerializer(source='productquantity_set', read_only=True, many=True)

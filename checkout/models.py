@@ -16,3 +16,4 @@ class ProductQuantity(models.Model):
   product_barcode = models.ForeignKey(Product, on_delete=models.CASCADE)
   checkout_id = models.ForeignKey(Checkout, on_delete=models.CASCADE)
   quantity = models.PositiveIntegerField()
+  price = models.PositiveIntegerField()

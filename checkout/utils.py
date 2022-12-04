@@ -92,6 +92,12 @@ def create_and_apply_checkout(data, productModels):
     productModel.quantity = max(0, productModel.quantity - checkoutDetails['quantity'])
     productModel.save()
     
-    checkout.products_quantity.add(productModel.barcode_id, through_defaults={'quantity': checkoutDetails['quantity']})
+    checkout.products_quantity.add(
+      productModel.barcode_id, 
+      through_defaults={
+        'quantity': checkoutDetails['quantity'],
+        'price': checkoutDetails['quantity'] * productModel.price,
+      }
+    )
 
   return status, message, checkout

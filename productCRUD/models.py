@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models import CharField
+from django.db.models.functions import Lower
+
+CharField.register_lookup(Lower)
 
 class Product(models.Model):
     name = models.CharField(max_length=63)
@@ -9,3 +13,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        db_table = "product"

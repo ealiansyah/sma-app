@@ -21,6 +21,23 @@ def create_help(request):
 
     return HttpResponse(status=201)
 
+@csrf_exempt
+@require_http_methods(["POST"])
+def delete_help(request):
+    request_body = json.loads(request.body)
+    id = request_body.get('id')
+    title = request_body.get('title')
+
+    if title == None:
+        return HttpResponseBadRequest("Select a form to delete")
+
+    create_help_query = f"DELETE FROM help_ticket \
+        WHERE id =='{id}';"
+    execute_query(create_help_query)
+
+    return HttpResponse(status=201)
+
+
 def execute_query(query):
     with connection.cursor() as cursor:
         cursor.execute(query)

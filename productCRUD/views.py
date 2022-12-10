@@ -49,17 +49,17 @@ def update_product(request):
     if barcode_id == None:
         return HttpResponseBadRequest("Barcode id can't be null")
 
-    update_product_query = "UPDATE product "
+    update_product_query = "UPDATE product SET"
     if name != None:
-        update_product_query += f"SET name = '{name}', "
+        update_product_query += f" name = '{name}', "
     if description != None:
-        update_product_query += f"SET description = '{description}', "
+        update_product_query += f" description = '{description}', "
     if quantity != None:
-        update_product_query += f"SET quantity = {quantity}, "
+        update_product_query += f" quantity = {quantity}, "
     if price != None:
-        update_product_query += f"SET price = {price}, "
+        update_product_query += f" price = {price}, "
     if category != None:
-        update_product_query += f"SET category = '{category}', "
+        update_product_query += f" category = '{category}', "
 
     update_product_query = update_product_query[:-2]
     update_product_query += f" WHERE barcode_id = '{barcode_id}';"

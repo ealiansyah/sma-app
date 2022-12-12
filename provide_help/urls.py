@@ -1,6 +1,7 @@
 from django.urls import path
+from .views import get_help_list, provide_help
 
 urlpatterns = [
-    path('', views.provide_help, name='provide_help'),
-    path('view_list/', views.get_help_list, name='list_help'),
+    path('', get_help_list, name='provide_help'),
+    path('view_ticket/', provide_help, name='list_help'),
 ]
